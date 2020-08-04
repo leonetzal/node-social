@@ -1,13 +1,16 @@
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
+const expressValidator = require('express-validator');
+
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const expressValidator = require('express-validator');
-const dotenv = require('dotenv');
 
 const { postRouter } = require('./routes/post');
 const { authRouter } = require('./routes/auth');
+const { userRouter } = require('./routes/user');
 
 dotenv.config();
 
@@ -26,10 +29,22 @@ mongoose.connection.on('error', err => {
 const port = process.env.PORT || 3000;
 
 app.use(morgan("dev"));
-app.use(bodyParser.json());
+
+app.use(cookieParser())
 app.use(expressValidator());
-app.use("/post", postRouter);
-app.use("/signup", authRouter);
+app.use(bodyParser.json());
+
+app.use("/", postRouter);
+app.use("/", authRouter);
+app.use("/", userRouter);
+
+app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+      res.status(401).send({
+        error: "Unauthorized!"
+      });
+    }
+  });
 
 app.listen(port, () => {
     console.log(`A NodeJS API is listening the port: ${port}`);
