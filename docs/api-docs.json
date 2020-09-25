@@ -1,0 +1,6 @@
+{
+    "/": "Get All Posts",
+    "/signup": "Sign Up",
+    "/signin": "Sign In",
+    "/signout": "Sign Out"
+}
