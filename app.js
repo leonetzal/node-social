@@ -17,9 +17,9 @@ const { userRouter } = require('./routes/user');
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
     .then(() => {
         console.log('DB Connected...');
     });
@@ -28,7 +28,7 @@ mongoose.connection.on('error', err => {
     console.log(`DB Connection Error: ${err.message}`);
 });
 
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
 
 app.use(morgan("dev"));
 
@@ -52,7 +52,7 @@ app.get('/', (req, res) => {
     });
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(401).send({
             error: "Unauthorized!"
@@ -60,6 +60,6 @@ app.use(function(err, req, res, next) {
     }
 });
 
-app.listen(port, () => {
-    console.log(`A NodeJS API is listening the port: ${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`A NodeJS API is listening the port: ${port}`);
+// });
