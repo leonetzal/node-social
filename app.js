@@ -28,7 +28,7 @@ mongoose.connection.on('error', err => {
     console.log(`DB Connection Error: ${err.message}`);
 });
 
-// const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(morgan("dev"));
 
@@ -60,6 +60,6 @@ app.use(function (err, req, res, next) {
     }
 });
 
-// app.listen(port, () => {
-//     console.log(`A NodeJS API is listening the port: ${port}`);
-// });
+app.listen(port, () => {
+    console.log(`A NodeJS API is listening the port: ${port}`);
+});
