@@ -37,10 +37,10 @@ app.use(cookieParser())
 app.use(expressValidator());
 app.use(bodyParser.json());
 
-app.use("/", postRouter);
-app.use("/", authRouter);
-app.use("/", userRouter);
-app.get('/', (req, res) => {
+app.use("/api", postRouter);
+app.use("/api", authRouter);
+app.use("/api", userRouter);
+app.get('/api', (req, res) => {
     fs.readFile('docs/api-docs.json', (err, data) => {
         if (err) {
             res.status(400).json({
